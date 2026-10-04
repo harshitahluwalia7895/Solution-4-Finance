@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solution 4 Finance | Home, Personal, Business & Car Loans</title>
+<meta name="description" content="Solution 4 Finance compares offers from leading banks to find you the right home, personal, business, construction or car loan. 15 years in banking and finance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --board:#0F3D33;
+  --board-2:#164B3F;
+  --marigold:#F2A93B;
+  --marigold-deep:#D98B16;
+  --mint:#D7EBE1;
+  --paper:#F4F7F5;
+  --ink:#13201C;
+  --muted:#4E5F59;
+  --line:#C9DAD1;
+  --white:#FFFFFF;
+  --error:#B3261E;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --wrap:1180px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;font-family:var(--body);font-size:17px;line-height:1.6;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--marigold);outline-offset:3px;border-radius:4px}
+.wrap{width:min(var(--wrap),100% - 40px);margin-inline:auto}
+h1,h2,h3{font-family:var(--display);line-height:1.05;letter-spacing:-.02em;margin:0}
+h2{font-size:clamp(2rem,4.2vw,3.2rem);font-weight:800;max-width:18ch}
+h3{font-size:1.35rem;font-weight:700;letter-spacing:-.01em}
+p{margin:0}
+.lede{color:var(--muted);font-size:1.1rem;max-width:58ch}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:.6em;font:600 1rem var(--body);padding:.95em 1.5em;border-radius:999px;border:2px solid transparent;text-decoration:none;cursor:pointer;transition:transform .2s ease, background .2s ease, color .2s ease}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--marigold);color:var(--ink)}
+.btn-primary:hover{background:var(--marigold-deep)}
+.btn-ghost{border-color:currentColor;background:transparent}
+.btn-ghost:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* Header */
+.site-header{position:sticky;top:0;z-index:50;transition:background .3s ease, box-shadow .3s ease}
+.site-header.scrolled{background:rgba(244,247,245,.88);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);box-shadow:0 1px 0 var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:76px}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none;font-family:var(--display);font-weight:800;font-size:1.2rem;letter-spacing:-.02em}
+.brand-mark{width:40px;height:40px;border-radius:11px;background:var(--board);display:grid;place-items:center;color:var(--marigold);font-size:.95rem;font-weight:800}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none;margin:0;padding:0}
+.nav-links a{text-decoration:none;font-weight:500;position:relative}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--marigold);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+.nav-links a:not(.btn):hover::after{transform:scaleX(1)}
+.nav-links .btn{padding:.65em 1.2em}
+.menu-toggle{display:none;background:none;border:0;width:44px;height:44px;cursor:pointer;position:relative}
+.menu-toggle span{position:absolute;left:10px;right:10px;height:2px;background:var(--ink);transition:transform .25s ease, opacity .25s ease}
+.menu-toggle span:nth-child(1){top:15px}.menu-toggle span:nth-child(2){top:21px}.menu-toggle span:nth-child(3){top:27px}
+.menu-open .menu-toggle span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.menu-open .menu-toggle span:nth-child(2){opacity:0}
+.menu-open .menu-toggle span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* Hero */
+.hero{padding:clamp(2rem,6vw,5rem) 0 clamp(4rem,8vw,7rem);position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(2rem,5vw,4.5rem);align-items:center}
+.hero h1{font-size:clamp(2.6rem,6vw,4.8rem);font-weight:800;max-width:15ch}
+.hero .lede{margin-top:1.5rem}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2.2rem}
+.hero-note{margin-top:2.2rem;display:flex;align-items:center;gap:.8rem;color:var(--muted);font-size:.95rem}
+.hero-note strong{font-family:var(--display);font-size:2.2rem;color:var(--ink);line-height:1}
+.hero-load > *{opacity:0;transform:translateY(18px);animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
+.hero-load > *:nth-child(2){animation-delay:.12s}
+.hero-load > *:nth-child(3){animation-delay:.24s}
+.hero-load > *:nth-child(4){animation-delay:.36s}
+@keyframes rise{to{opacity:1;transform:none}}
+
+/* Split-flap rate board — the signature element */
+.board{background:var(--board);color:var(--paper);border-radius:22px;padding:clamp(1.2rem,3vw,2rem);box-shadow:0 30px 60px -30px rgba(15,61,51,.6), inset 0 0 0 1px rgba(255,255,255,.06);position:relative;opacity:0;transform:translateY(24px) rotate(-1.2deg);animation:boardIn 1s .2s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes boardIn{to{opacity:1;transform:rotate(-1.2deg)}}
+.board::before,.board::after{content:"";position:absolute;top:14px;width:9px;height:9px;border-radius:50%;background:#0A2C24;box-shadow:inset 0 1px 1px rgba(0,0,0,.5)}
+.board::before{left:14px}.board::after{right:14px}
+.board-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:0 .3rem 1rem;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:.8rem}
+.board-title{font-family:var(--display);font-weight:700;font-size:1.05rem}
+.board-live{font-size:.82rem;color:var(--mint);display:flex;align-items:center;gap:.45rem}
+.board-live i{width:8px;height:8px;border-radius:50%;background:var(--marigold);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.board-rows{list-style:none;margin:0;padding:0}
+.board-row a{display:flex;justify-content:space-between;align-items:center;gap:.6rem;padding:.42rem .3rem;border-radius:10px;text-decoration:none;transition:background .2s ease}
+.board-row a:hover{background:rgba(255,255,255,.06)}
+.flaps{display:flex;gap:3px}
+.flap{--s:clamp(11px,2.9vw,19px);width:calc(var(--s) * 1.08);height:calc(var(--s) * 1.6);display:grid;place-items:center;font:700 var(--s)/1 var(--display);font-variant-numeric:tabular-nums;background:linear-gradient(#0B3029 0 49%, #082620 51% 100%);border-radius:3px;position:relative;color:var(--paper)}
+.flap::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(0,0,0,.55)}
+.flap.rate{color:var(--marigold)}
+.flap.tick{animation:flip .09s linear}
+@keyframes flip{0%{transform:rotateX(0)}50%{transform:rotateX(-80deg)}100%{transform:rotateX(0)}}
+.board-foot{margin-top:1rem;padding:0 .3rem;font-size:.8rem;color:rgba(244,247,245,.65)}
+
+/* Sections */
+section{padding:clamp(4rem,9vw,7.5rem) 0}
+.section-head{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:end;margin-bottom:clamp(2.5rem,5vw,4rem)}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* Loans list */
+.loans{background:var(--white);border-radius:32px 32px 0 0}
+.loan-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.loan{display:grid;grid-template-columns:3.2rem 1.2fr 1.6fr auto;gap:1.5rem;align-items:center;padding:1.6rem .5rem;border-bottom:1px solid var(--line);position:relative}
+.loan::before{content:"";position:absolute;inset:0;background:var(--mint);transform:scaleY(0);transform-origin:bottom;transition:transform .35s cubic-bezier(.2,.7,.2,1);z-index:0;border-radius:6px}
+.loan:hover::before{transform:scaleY(1)}
+.loan > *{position:relative;z-index:1}
+.loan-icon{width:3.2rem;height:3.2rem;border-radius:14px;background:var(--board);display:grid;place-items:center;color:var(--marigold)}
+.loan-icon svg{width:24px;height:24px}
+.loan p{color:var(--muted)}
+.loan-rate{text-align:right;min-width:8.5rem}
+.loan-rate b{display:block;font-family:var(--display);font-size:1.7rem;letter-spacing:-.02em}
+.loan-rate small{color:var(--muted)}
+.loan-rate a{display:inline-block;margin-top:.3rem;font-weight:600;font-size:.95rem;text-underline-offset:4px}
+
+/* Process */
+.process{background:var(--white);padding-top:0}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;list-style:none;margin:0;padding:0;counter-reset:step;position:relative}
+.steps::before{content:"";position:absolute;top:1.6rem;left:1.6rem;right:1.6rem;height:2px;background:var(--line)}
+.steps::after{content:"";position:absolute;top:1.6rem;left:1.6rem;height:2px;background:var(--marigold);width:0;transition:width 1.6s cubic-bezier(.4,0,.2,1) .2s}
+.steps.in::after{width:calc(100% - 3.2rem)}
+.step{position:relative;z-index:1;counter-increment:step}
+.step::before{content:counter(step);width:3.2rem;height:3.2rem;border-radius:50%;background:var(--paper);border:2px solid var(--line);display:grid;place-items:center;font:800 1.15rem var(--display);margin-bottom:1.25rem;transition:background .4s ease, border-color .4s ease}
+.steps.in .step::before{background:var(--marigold);border-color:var(--marigold)}
+.steps.in .step:nth-child(2)::before{transition-delay:.5s}
+.steps.in .step:nth-child(3)::before{transition-delay:.9s}
+.steps.in .step:nth-child(4)::before{transition-delay:1.3s}
+.step p{color:var(--muted);margin-top:.5rem;font-size:.98rem}
+
+/* Calculator */
+.calc{background:var(--board);color:var(--paper)}
+.calc h2{color:var(--paper)}
+.calc .lede{color:rgba(244,247,245,.75)}
+.calc-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(1.5rem,4vw,3.5rem);align-items:start}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}
+.chip{font:500 .92rem var(--body);padding:.5em 1em;border-radius:999px;border:1.5px solid rgba(255,255,255,.25);background:transparent;color:var(--paper);cursor:pointer;transition:background .2s, color .2s, border-color .2s}
+.chip:hover{border-color:var(--marigold)}
+.chip[aria-pressed="true"]{background:var(--marigold);border-color:var(--marigold);color:var(--ink)}
+.field{margin-bottom:1.9rem}
+.field-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:.7rem}
+.field-top label{font-weight:500}
+.field-top input{width:9.5rem;text-align:right;font:700 1.05rem var(--display);background:var(--board-2);color:var(--paper);border:1.5px solid rgba(255,255,255,.15);border-radius:10px;padding:.45em .7em}
+.field-top input:focus{border-color:var(--marigold);outline:none}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:6px;background:linear-gradient(to right,var(--marigold) var(--p,50%),rgba(255,255,255,.18) var(--p,50%));cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--paper);border:5px solid var(--marigold);transition:transform .15s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--paper);border:5px solid var(--marigold)}
+.range-ends{display:flex;justify-content:space-between;font-size:.8rem;color:rgba(244,247,245,.55);margin-top:.4rem}
+.result{background:var(--paper);color:var(--ink);border-radius:24px;padding:clamp(1.4rem,3vw,2.2rem)}
+.result-top{display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:center}
+.emi-label{color:var(--muted)}
+.emi-value{white-space:nowrap;font:800 clamp(2.4rem,5vw,3.6rem)/1 var(--display);letter-spacing:-.03em;margin-top:.3rem;font-variant-numeric:tabular-nums}
+.emi-value small{font-size:.38em;font-weight:500;color:var(--muted);letter-spacing:0}
+.donut{width:132px;height:132px}
+.donut circle{fill:none;stroke-width:16}
+.donut .d-int{stroke:var(--marigold);transition:stroke-dasharray .6s cubic-bezier(.2,.7,.2,1)}
+.splits{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.8rem;padding-top:1.4rem;border-top:1px solid var(--line)}
+.splits dt{font-size:.85rem;color:var(--muted);display:flex;align-items:center;gap:.4rem}
+.splits dd{margin:.2rem 0 0;font:700 1.1rem var(--display);font-variant-numeric:tabular-nums}
+.key{width:10px;height:10px;border-radius:3px;display:inline-block}
+.bars-wrap{margin-top:1.8rem}
+.bars-title{font-size:.88rem;color:var(--muted);margin-bottom:.6rem}
+.bars{display:flex;align-items:flex-end;gap:3px;height:110px}
+.bar{flex:1;display:flex;flex-direction:column-reverse;border-radius:3px 3px 0 0;overflow:hidden;min-width:3px;height:100%}
+.bar span{display:block;transition:height .5s cubic-bezier(.2,.7,.2,1)}
+.bar .bp{background:var(--board)}
+.bar .bi{background:var(--marigold)}
+.calc-cta{margin-top:1.6rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.calc-cta p{font-size:.85rem;color:var(--muted);max-width:30ch}
+
+/* Why us */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,5rem)}
+.why-copy p + p{margin-top:1.1rem}
+.why-copy p{color:var(--muted);max-width:56ch}
+.values{list-style:none;margin:0;padding:0;display:grid;gap:1rem}
+.value{background:var(--white);border-radius:20px;padding:1.6rem 1.8rem;border-left:5px solid var(--marigold)}
+.value:nth-child(2){margin-left:clamp(0rem,3vw,2.5rem)}
+.value:nth-child(3){margin-left:clamp(0rem,6vw,5rem)}
+.value p{color:var(--muted);margin-top:.4rem;font-size:.98rem}
+
+/* Vision & mission */
+.purpose{padding-top:0}
+.purpose-grid{display:grid;grid-template-columns:1fr 1fr;border-radius:28px;overflow:hidden}
+.purpose-grid > div{padding:clamp(2rem,5vw,3.5rem)}
+.purpose-grid > div:first-child{background:var(--mint)}
+.purpose-grid > div:last-child{background:var(--marigold)}
+.purpose h3{font-size:1rem;font-family:var(--body);font-weight:600;color:var(--muted)}
+.purpose-grid > div:last-child h3{color:#5A3B07}
+.purpose blockquote{margin:.8rem 0 0;font:700 clamp(1.4rem,2.6vw,2rem)/1.2 var(--display);letter-spacing:-.015em}
+
+/* Apply */
+.apply{background:var(--white)}
+.apply-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(2rem,6vw,5rem)}
+.contact-list{list-style:none;padding:0;margin:2.2rem 0 0;display:grid;gap:1rem}
+.contact-list a{display:flex;align-items:center;gap:1rem;text-decoration:none;padding:1rem 1.2rem;border-radius:16px;background:var(--paper);transition:background .2s ease}
+.contact-list a:hover{background:var(--mint)}
+.contact-list svg{width:22px;height:22px;flex:none;color:var(--board)}
+.contact-list b{display:block;font-family:var(--display);font-size:1.15rem}
+.contact-list small{color:var(--muted)}
+form{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem 1.2rem}
+.f{display:flex;flex-direction:column;gap:.4rem}
+.f.full{grid-column:1 / -1}
+.f label{font-weight:500;font-size:.95rem}
+.f label span{color:var(--muted);font-weight:400}
+.f input,.f select,.f textarea{font:400 1rem var(--body);color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:.85em 1em;transition:border-color .2s, background .2s}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--board);background:var(--white)}
+.f textarea{min-height:110px;resize:vertical}
+.f .err{color:var(--error);font-size:.85rem;min-height:0}
+.f.invalid input,.f.invalid select{border-color:var(--error)}
+.hp{position:absolute;left:-9999px}
+.form-foot{grid-column:1 / -1;display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;margin-top:.4rem}
+.form-foot small{color:var(--muted);max-width:40ch}
+.btn[disabled]{opacity:.6;cursor:wait}
+.form-status{grid-column:1 / -1;border-radius:14px;padding:1rem 1.2rem;display:none}
+.form-status.ok{display:block;background:var(--mint);color:var(--board)}
+.form-status.bad{display:block;background:#FBE9E7;color:var(--error)}
+
+/* Footer */
+footer{background:var(--ink);color:rgba(244,247,245,.75);padding:3.5rem 0 2.5rem;font-size:.92rem}
+.foot-grid{display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap;align-items:flex-start}
+footer .brand{color:var(--paper)}
+footer nav{display:flex;gap:1.5rem;flex-wrap:wrap}
+footer nav a{text-decoration:none}
+footer nav a:hover{color:var(--marigold)}
+.disclaimer{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.1);font-size:.82rem;color:rgba(244,247,245,.5);max-width:90ch}
+
+/* Floating call button (mobile) */
+.fab{position:fixed;right:18px;bottom:18px;z-index:60;width:58px;height:58px;border-radius:50%;background:var(--marigold);display:none;place-items:center;box-shadow:0 12px 24px -8px rgba(0,0,0,.35)}
+.fab svg{width:24px;height:24px}
+
+/* Responsive */
+@media (max-width: 960px){
+  .hero-grid,.calc-grid,.why-grid,.apply-grid,.section-head{grid-template-columns:1fr}
+  .board{transform:none;animation-name:boardInFlat}
+  .loan{grid-template-columns:3.2rem 1fr;gap:1rem 1.2rem}
+  .loan p{grid-column:2}
+  .loan-rate{grid-column:2;text-align:left}
+  .steps{grid-template-columns:1fr 1fr;row-gap:2.5rem}
+  .steps::before,.steps::after{display:none}
+  .value:nth-child(n){margin-left:0}
+}
+@keyframes boardInFlat{to{opacity:1;transform:none}}
+@media (max-width: 760px){
+  .menu-toggle{display:block}
+  .nav-links{position:fixed;inset:76px 0 auto 0;flex-direction:column;align-items:flex-start;gap:0;background:var(--paper);padding:.5rem 20px 1.5rem;border-bottom:1px solid var(--line);transform:translateY(-12px);opacity:0;visibility:hidden;transition:all .25s ease}
+  .menu-open .nav-links{transform:none;opacity:1;visibility:visible}
+  .nav-links li{width:100%}
+  .nav-links a:not(.btn){display:block;padding:.85rem 0;border-bottom:1px solid var(--line)}
+  .nav-links .btn{margin-top:1rem}
+  .purpose-grid{grid-template-columns:1fr}
+  form{grid-template-columns:1fr}
+  .splits{grid-template-columns:1fr 1fr}
+  .result-top{grid-template-columns:1fr}
+  .donut{display:none}
+  .fab{display:grid}
+}
+@media (max-width: 520px){
+  .steps{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header" id="top">
+  <div class="wrap nav">
+    <a href="#top" class="brand" aria-label="Solution 4 Finance home">
+      <span class="brand-mark">S4F</span>
+      Solution 4 Finance
+    </a>
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#loans">Loans</a></li>
+      <li><a href="#calculator">EMI calculator</a></li>
+      <li><a href="#why">About us</a></li>
+      <li><a href="#apply" class="btn btn-primary">Apply for a loan</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div class="hero-load">
+        <h1 id="hero-title">The right loan, at a rate that makes sense.</h1>
+        <p class="lede">We compare offers from leading banks, handle the paperwork for you, and stay with you until the money reaches your account. Home, personal, business, construction and car loans, plus insurance.</p>
+        <div class="hero-actions">
+          <a href="#apply" class="btn btn-primary">Check my eligibility</a>
+          <a href="#calculator" class="btn btn-ghost">Calculate my EMI</a>
+        </div>
+        <p class="hero-note"><strong>15</strong> years of helping families and businesses borrow well.</p>
+      </div>
+
+      <div class="board" role="region" aria-label="Starting interest rates">
+        <div class="board-head">
+          <span class="board-title">Starting rates today</span>
+          <span class="board-live"><i></i>Updated by our advisors</span>
+        </div>
+        <ul class="board-rows" id="board-rows"></ul>
+        <p class="board-foot">*Indicative starting rates. Final rate depends on your profile and the lender's approval.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOANS -->
+  <section class="loans" id="loans" aria-labelledby="loans-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="loans-title">Loans and insurance, matched to what you need</h2>
+        <p class="lede">Tell us what you're planning. We shortlist the lenders most likely to approve you at the lowest rate, so you don't have to visit every bank yourself.</p>
+      </div>
+      <ul class="loan-list">
+        <li class="loan reveal">
+          <span class="loan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></span>
+          <h3>Home loan</h3>
+          <p>Buy a ready flat, a new house, or transfer your existing loan to a lower rate.</p>
+          <div class="loan-rate"><b>8.40%*</b><small>onwards p.a.</small><br><a href="#apply" data-loan="home">Apply for a home loan</a></div>
+        </li>
+        <li class="loan reveal">
+          <span class="loan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span>
+          <h3>Personal loan</h3>
+          <p>For a wedding, medical bills, travel or anything else, with quick approval.</p>
+          <div class="loan-rate"><b>10.50%*</b><small>onwards p.a.</small><br><a href="#apply" data-loan="personal">Apply for a personal loan</a></div>
+        </li>
+        <li class="loan reveal">
+          <span class="loan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/><path d="M3 13h18"/></svg></span>
+          <h3>Business loan</h3>
+          <p>Working capital or expansion funding, with the minimum documents possible.</p>
+          <div class="loan-rate"><b>Ask us</b><small>rate depends on business profile</small><br><a href="#apply" data-loan="business">Apply for a business loan</a></div>
+        </li>
+        <li class="loan reveal">
+          <span class="loan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><path d="M9 20v-4h6v4"/><path d="M12 4v3"/></svg></span>
+          <h3>Construction loan</h3>
+          <p>Build on your own plot, with funds released in stages as construction progresses.</p>
+          <div class="loan-rate"><b>8.50%*</b><small>onwards p.a.</small><br><a href="#apply" data-loan="construction">Apply for a construction loan</a></div>
+        </li>
+        <li class="loan reveal">
+          <span class="loan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14v-5l-2-5H7l-2 5v5z"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/><path d="M5 12h14"/></svg></span>
+          <h3>Car and auto loan</h3>
+          <p>New or used car, with financing up to a large share of the on-road price.</p>
+          <div class="loan-rate"><b>8.50%*</b><small>onwards p.a.</small><br><a href="#apply" data-loan="car">Apply for a car loan</a></div>
+        </li>
+        <li class="loan reveal">
+          <span class="loan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></span>
+          <h3>Insurance</h3>
+          <p>Protect your loan and your family with cover chosen for your situation.</p>
+          <div class="loan-rate"><b>Free advice</b><small>compare plans with us</small><br><a href="#apply" data-loan="insurance">Ask about insurance</a></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process" aria-labelledby="process-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="process-title">From enquiry to disbursal, we handle the hard parts</h2>
+        <p class="lede">We know where loan applications usually get stuck, and we steer you around those problems before they happen.</p>
+      </div>
+      <ol class="steps" id="steps">
+        <li class="step"><h3>Share your need</h3><p>Fill the short form or call us. Tell us the loan type, amount and your income details.</p></li>
+        <li class="step"><h3>We match lenders</h3><p>We compare banks and NBFCs and recommend the best fit for your profile and rate.</p></li>
+        <li class="step"><h3>Paperwork, handled</h3><p>We collect your documents, prepare the file, and follow up with the bank for you.</p></li>
+        <li class="step"><h3>Disbursal and after</h3><p>Funds reach your account, and we stay available for top-ups, transfers and queries.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- EMI CALCULATOR -->
+  <section class="calc" id="calculator" aria-labelledby="calc-title">
+    <div class="wrap calc-grid">
+      <div>
+        <div class="reveal">
+          <h2 id="calc-title">Work out your monthly EMI</h2>
+          <p class="lede" style="margin:1.2rem 0 2.2rem">Move the sliders or type in the numbers. Pick a loan type to start from our indicative rate.</p>
+        </div>
+        <div class="chips" role="group" aria-label="Loan type">
+          <button class="chip" type="button" data-rate="8.40" aria-pressed="true">Home</button>
+          <button class="chip" type="button" data-rate="10.50" aria-pressed="false">Personal</button>
+          <button class="chip" type="button" data-rate="8.50" aria-pressed="false">Construction</button>
+          <button class="chip" type="button" data-rate="8.50" aria-pressed="false">Car</button>
+        </div>
+
+        <div class="field">
+          <div class="field-top"><label for="amt-n">Loan amount (₹)</label><input id="amt-n" inputmode="numeric" aria-describedby="amt-ends"></div>
+          <input type="range" id="amt" min="50000" max="50000000" step="50000" value="2500000" aria-label="Loan amount slider">
+          <div class="range-ends" id="amt-ends"><span>₹50 thousand</span><span>₹5 crore</span></div>
+        </div>
+        <div class="field">
+          <div class="field-top"><label for="rate-n">Interest rate (% p.a.)</label><input id="rate-n" inputmode="decimal"></div>
+          <input type="range" id="rate" min="6" max="24" step="0.05" value="8.4" aria-label="Interest rate slider">
+          <div class="range-ends"><span>6%</span><span>24%</span></div>
+        </div>
+        <div class="field">
+          <div class="field-top"><label for="yrs-n">Tenure (years)</label><input id="yrs-n" inputmode="numeric"></div>
+          <input type="range" id="yrs" min="1" max="30" step="1" value="20" aria-label="Tenure slider">
+          <div class="range-ends"><span>1 year</span><span>30 years</span></div>
+        </div>
+      </div>
+
+      <div class="result reveal" aria-live="polite">
+        <div class="result-top">
+          <div>
+            <p class="emi-label">Your monthly EMI</p>
+            <p class="emi-value" id="emi">₹0</p>
+          </div>
+          <svg class="donut" viewBox="0 0 132 132" aria-hidden="true">
+            <circle cx="66" cy="66" r="50" stroke="var(--board)"/>
+            <circle class="d-int" cx="66" cy="66" r="50" transform="rotate(-90 66 66)" stroke-dasharray="0 315"/>
+          </svg>
+        </div>
+        <dl class="splits">
+          <div><dt><span class="key" style="background:var(--board)"></span>Principal</dt><dd id="o-p">₹0</dd></div>
+          <div><dt><span class="key" style="background:var(--marigold)"></span>Total interest</dt><dd id="o-i">₹0</dd></div>
+          <div><dt>Total payable</dt><dd id="o-t">₹0</dd></div>
+        </dl>
+        <div class="bars-wrap">
+          <p class="bars-title">What you repay each year: principal and interest</p>
+          <div class="bars" id="bars"></div>
+        </div>
+        <div class="calc-cta">
+          <p>Estimates only. Your actual EMI depends on the lender's sanctioned rate.</p>
+          <a href="#apply" class="btn btn-primary">Get this loan</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section id="why" aria-labelledby="why-title">
+    <div class="wrap why-grid">
+      <div class="why-copy reveal">
+        <h2 id="why-title">Why people choose Solution 4 Finance</h2>
+        <p style="margin-top:1.6rem">We've worked in banking and finance for 15 years. Our team of dedicated, experienced specialists knows how each lender assesses an application, so we can guide you through approval and disbursal without surprises.</p>
+        <p>We look at your whole financial picture, from what you need today to your long-term goals, and lay out the options with the lowest rates so you can decide with confidence.</p>
+        <p>We put clients first and care more about lasting relationships than one-time deals. When your goals grow, we're still here to help.</p>
+      </div>
+      <ul class="values">
+        <li class="value reveal"><h3>Fairness and transparency</h3><p>Every fee, rate and condition explained up front, before you sign anything.</p></li>
+        <li class="value reveal"><h3>Integrity and teamwork</h3><p>One team working on your file, giving you honest advice, even when that means waiting.</p></li>
+        <li class="value reveal"><h3>Quality advice and after-sales service</h3><p>Help with balance transfers, top-ups and paperwork long after your loan is disbursed.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- VISION & MISSION -->
+  <section class="purpose" aria-label="Vision and mission">
+    <div class="wrap">
+      <div class="purpose-grid reveal">
+        <div><h3>Our vision</h3><blockquote>To lead in loan and insurance services by putting your needs first and caring for you at every step.</blockquote></div>
+        <div><h3>Our mission</h3><blockquote>To be the one-stop financial services company clients prefer for every loan and insurance need.</blockquote></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLY -->
+  <section class="apply" id="apply" aria-labelledby="apply-title">
+    <div class="wrap apply-grid">
+      <div class="reveal">
+        <h2 id="apply-title">Apply now, or talk to an advisor</h2>
+        <p class="lede" style="margin-top:1.2rem">Send your details and an advisor will call you back. Prefer to talk first? Call or WhatsApp us directly.</p>
+        <ul class="contact-list">
+          <li><a href="tel:+919718948002"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.4 1.8.7 2.7a2 2 0 01-.5 2.1L8 9.8a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.7.7a2 2 0 011.7 2z"/></svg><span><b>+91 97189 48002</b><small>Call a loan advisor</small></span></a></li>
+          <li><a href="tel:+919953727702"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.4 1.8.7 2.7a2 2 0 01-.5 2.1L8 9.8a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.7.7a2 2 0 011.7 2z"/></svg><span><b>+91 99537 27702</b><small>Call a loan advisor</small></span></a></li>
+          <li><a href="https://wa.me/919718948002" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 01-12.4 7.4L3 21l2.1-5.4A8.5 8.5 0 1121 11.5z"/></svg><span><b>Chat on WhatsApp</b><small>Usually replies within the hour</small></span></a></li>
+        </ul>
+      </div>
+
+      <form id="apply-form" novalidate class="reveal">
+        <div class="f"><label for="f-name">Full name</label><input id="f-name" name="name" autocomplete="name" required><span class="err" data-for="name"></span></div>
+        <div class="f"><label for="f-phone">Mobile number</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="10-digit number" required><span class="err" data-for="phone"></span></div>
+        <div class="f"><label for="f-loan">Loan type</label>
+          <select id="f-loan" name="loan_type" required>
+            <option value="">Choose one</option>
+            <option value="home">Home loan</option>
+            <option value="personal">Personal loan</option>
+            <option value="business">Business loan</option>
+            <option value="construction">Construction loan</option>
+            <option value="car">Car / auto loan</option>
+            <option value="insurance">Insurance</option>
+          </select><span class="err" data-for="loan_type"></span></div>
+        <div class="f"><label for="f-amount">Amount needed <span>(₹, optional)</span></label><input id="f-amount" name="amount" inputmode="numeric" placeholder="e.g. 25,00,000"><span class="err" data-for="amount"></span></div>
+        <div class="f"><label for="f-email">Email <span>(optional)</span></label><input id="f-email" name="email" type="email" autocomplete="email"><span class="err" data-for="email"></span></div>
+        <div class="f"><label for="f-city">City <span>(optional)</span></label><input id="f-city" name="city" autocomplete="address-level2"></div>
+        <div class="f full"><label for="f-msg">Anything else we should know? <span>(optional)</span></label><textarea id="f-msg" name="message" placeholder="Monthly income, existing loans, property details..."></textarea></div>
+        <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="form-status" id="form-status" role="status"></div>
+        <div class="form-foot">
+          <button class="btn btn-primary" type="submit" id="submit-btn">Send my enquiry</button>
+          <small>We only use your details to discuss your loan. No spam, no sharing.</small>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <a href="#top" class="brand"><span class="brand-mark">S4F</span>Solution 4 Finance</a>
+      <nav aria-label="Footer">
+        <a href="#loans">Loans</a>
+        <a href="#calculator">EMI calculator</a>
+        <a href="#why">About us</a>
+        <a href="#apply">Apply</a>
+        <a href="tel:+919718948002">+91 97189 48002</a>
+      </nav>
+    </div>
+    <p class="disclaimer">*Interest rates shown are indicative starting rates and may change without notice. Final rates, loan amounts and approval are decided by the lending bank or NBFC based on your credit profile and documents. Solution 4 Finance is a loan advisory and facilitation agency. &copy; <span id="yr"></span> Solution 4 Finance. All rights reserved.</p>
+  </div>
+</footer>
+
+<a class="fab" href="tel:+919718948002" aria-label="Call Solution 4 Finance">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#13201C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.4 1.8.7 2.7a2 2 0 01-.5 2.1L8 9.8a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.7.7a2 2 0 011.7 2z"/></svg>
+</a>
+
+<script>
+(function () {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const inr = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  /* Header shadow + mobile menu */
+  const header = document.querySelector(".site-header");
+  const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 10);
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  const toggle = document.querySelector(".menu-toggle");
+  toggle.addEventListener("click", () => {
+    const open = document.body.classList.toggle("menu-open");
+    toggle.setAttribute("aria-expanded", open);
+  });
+  document.querySelectorAll(".nav-links a").forEach(a => a.addEventListener("click", () => {
+    document.body.classList.remove("menu-open"); toggle.setAttribute("aria-expanded", "false");
+  }));
+
+  /* Split-flap rate board */
+  const RATES = [
+    { name: "HOME LOAN", rate: "8.40%", key: "home" },
+    { name: "CONSTRUCTION", rate: "8.50%", key: "construction" },
+    { name: "CAR LOAN", rate: "8.50%", key: "car" },
+    { name: "PERSONAL", rate: "10.50%", key: "personal" },
+    { name: "BUSINESS", rate: "ASK US", key: "business" }
+  ];
+  const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%.";
+  const rowsEl = document.getElementById("board-rows");
+  const allFlaps = [];
+  RATES.forEach((r, ri) => {
+    const li = document.createElement("li");
+    li.className = "board-row";
+    const a = document.createElement("a");
+    a.href = "#apply"; a.dataset.loan = r.key;
+    a.setAttribute("aria-label", r.name.toLowerCase() + " from " + r.rate.toLowerCase());
+    const left = document.createElement("span"); left.className = "flaps"; left.setAttribute("aria-hidden", "true");
+    const right = document.createElement("span"); right.className = "flaps"; right.setAttribute("aria-hidden", "true");
+    r.name.padEnd(12, " ").split("").forEach((ch, i) => {
+      const s = document.createElement("span"); s.className = "flap"; left.appendChild(s);
+      allFlaps.push({ el: s, target: ch, delay: ri * 140 + i * 35 });
+    });
+    r.rate.padStart(6, " ").split("").forEach((ch, i) => {
+      const s = document.createElement("span"); s.className = "flap rate"; right.appendChild(s);
+      allFlaps.push({ el: s, target: ch, delay: ri * 140 + 500 + i * 60 });
+    });
+    a.append(left, right); li.appendChild(a); rowsEl.appendChild(li);
+  });
+  function settleFlap(f) {
+    if (reduceMotion || f.target === " ") { f.el.textContent = f.target; return; }
+    let flips = 6 + Math.floor(Math.random() * 8);
+    setTimeout(function step() {
+      f.el.classList.remove("tick"); void f.el.offsetWidth; f.el.classList.add("tick");
+      if (flips-- > 0) {
+        f.el.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+        setTimeout(step, 70);
+      } else {
+        f.el.textContent = f.target;
+      }
+    }, 450 + f.delay);
+  }
+  allFlaps.forEach(settleFlap);
+
+  /* Scroll reveals */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll(".reveal, #steps").forEach(el => io.observe(el));
+
+  /* Preselect loan type from any "apply" link */
+  const loanSelect = document.getElementById("f-loan");
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest("[data-loan]");
+    if (link) loanSelect.value = link.dataset.loan;
+  });
+
+  /* EMI calculator */
+  const amt = document.getElementById("amt"), rate = document.getElementById("rate"), yrs = document.getElementById("yrs");
+  const amtN = document.getElementById("amt-n"), rateN = document.getElementById("rate-n"), yrsN = document.getElementById("yrs-n");
+  const emiEl = document.getElementById("emi"), barsEl = document.getElementById("bars");
+  const donutInt = document.querySelector(".d-int");
+  const CIRC = 2 * Math.PI * 50;
+  let shownEmi = 0, animFrame;
+
+  function paintRange(r) {
+    const p = (r.value - r.min) / (r.max - r.min) * 100;
+    r.style.setProperty("--p", p + "%");
+  }
+  function animateEmi(to) {
+    cancelAnimationFrame(animFrame);
+    if (reduceMotion) { shownEmi = to; emiEl.innerHTML = inr(to) + " <small>/ month</small>"; return; }
+    const from = shownEmi, start = performance.now(), dur = 450;
+    const tick = (t) => {
+      const k = Math.min(1, (t - start) / dur), eased = 1 - Math.pow(1 - k, 3);
+      shownEmi = from + (to - from) * eased;
+      emiEl.innerHTML = inr(shownEmi) + " <small>/ month</small>";
+      if (k < 1) animFrame = requestAnimationFrame(tick);
+    };
+    animFrame = requestAnimationFrame(tick);
+  }
+  function compute() {
+    const P = +amt.value, R = +rate.value / 1200, N = +yrs.value * 12;
+    const f = Math.pow(1 + R, N);
+    const emi = R === 0 ? P / N : P * R * f / (f - 1);
+    const total = emi * N, interest = total - P;
+
+    animateEmi(emi);
+    document.getElementById("o-p").textContent = inr(P);
+    document.getElementById("o-i").textContent = inr(interest);
+    document.getElementById("o-t").textContent = inr(total);
+    const share = interest / total;
+    donutInt.setAttribute("stroke-dasharray", (share * CIRC).toFixed(1) + " " + CIRC.toFixed(1));
+
+    // yearly principal vs interest
+    let bal = P; const years = [];
+    for (let y = 0; y < +yrs.value; y++) {
+      let pi = 0, ii = 0;
+      for (let m = 0; m < 12; m++) { const int = bal * R; const pr = emi - int; ii += int; pi += pr; bal -= pr; }
+      years.push({ pi, ii });
+    }
+    const max = Math.max(...years.map(v => v.pi + v.ii));
+    barsEl.innerHTML = years.map((v, i) =>
+      '<div class="bar" title="Year ' + (i + 1) + ': principal ' + inr(v.pi) + ', interest ' + inr(v.ii) + '">' +
+      '<span class="bp" style="height:' + (v.pi / max * 100).toFixed(2) + '%"></span>' +
+      '<span class="bi" style="height:' + (v.ii / max * 100).toFixed(2) + '%"></span></div>'
+    ).join("");
+
+    [amt, rate, yrs].forEach(paintRange);
+  }
+  function syncFromRange() {
+    amtN.value = (+amt.value).toLocaleString("en-IN");
+    rateN.value = (+rate.value).toFixed(2);
+    yrsN.value = yrs.value;
+    compute();
+  }
+  function syncFromNumber(numEl, rangeEl) {
+    const v = parseFloat(String(numEl.value).replace(/,/g, ""));
+    if (isNaN(v)) return;
+    rangeEl.value = Math.min(+rangeEl.max, Math.max(+rangeEl.min, v));
+    compute();
+  }
+  [amt, rate, yrs].forEach(r => r.addEventListener("input", () => {
+    if (r === rate) document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", "false"));
+    syncFromRange();
+  }));
+  amtN.addEventListener("input", () => syncFromNumber(amtN, amt));
+  rateN.addEventListener("input", () => syncFromNumber(rateN, rate));
+  yrsN.addEventListener("input", () => syncFromNumber(yrsN, yrs));
+  [amtN, rateN, yrsN].forEach(n => n.addEventListener("blur", syncFromRange));
+  document.querySelectorAll(".chip").forEach(chip => chip.addEventListener("click", () => {
+    document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", String(c === chip)));
+    rate.value = chip.dataset.rate; syncFromRange();
+  }));
+  syncFromRange();
+
+  /* Application form */
+  const form = document.getElementById("apply-form");
+  const status = document.getElementById("form-status");
+  const btn = document.getElementById("submit-btn");
+  function showErrors(errors) {
+    form.querySelectorAll(".f").forEach(f => f.classList.remove("invalid"));
+    form.querySelectorAll(".err").forEach(e => e.textContent = "");
+    Object.keys(errors).forEach(k => {
+      const e = form.querySelector('.err[data-for="' + k + '"]');
+      if (e) { e.textContent = errors[k]; e.parentElement.classList.add("invalid"); }
+    });
+    const first = form.querySelector(".invalid input, .invalid select");
+    if (first) first.focus();
+  }
+  function validate(d) {
+    const errors = {};
+    if (!d.name || d.name.trim().length < 2) errors.name = "Enter your full name.";
+    const ph = (d.phone || "").replace(/\D/g, "").replace(/^(91|0)(?=\d{10}$)/, "");
+    if (!/^[6-9]\d{9}$/.test(ph)) errors.phone = "Enter a 10-digit Indian mobile number.";
+    if (!d.loan_type) errors.loan_type = "Choose the type of loan you need.";
+    if (d.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)) errors.email = "Enter a valid email address, or leave it blank.";
+    return errors;
+  }
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    status.className = "form-status"; status.textContent = "";
+    const data = Object.fromEntries(new FormData(form).entries());
+    const errors = validate(data);
+    if (Object.keys(errors).length) { showErrors(errors); return; }
+    showErrors({});
+    btn.disabled = true; btn.textContent = "Sending...";
+    try {
+      const res = await fetch("/api/apply", {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data)
+      });
+      const out = await res.json();
+      if (out.ok) {
+        status.className = "form-status ok";
+        status.textContent = out.message || "Enquiry received. An advisor will call you shortly.";
+        form.reset();
+      } else if (out.errors) {
+        showErrors(out.errors);
+      } else { throw new Error(); }
+    } catch (err) {
+      status.className = "form-status bad";
+      status.textContent = "Your enquiry didn't go through. Check your connection and try again, or call us on +91 97189 48002.";
+    } finally {
+      btn.disabled = false; btn.textContent = "Send my enquiry";
+    }
+  });
+})();
+</script>
+</body>
+</html>
